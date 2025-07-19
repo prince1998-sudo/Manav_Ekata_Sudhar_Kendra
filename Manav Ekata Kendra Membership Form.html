@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>मानव एकता समाज सुधार केन्द्र -Membership Form</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { box-sizing: border-box; }
+    input, select, textarea, button {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #cde6f5, #ffffff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+      
+    }
+    .form-container {
+  background: 
+    linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+    url('sasthalogo.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 1100px;
+  animation: fadeIn 0.6s ease;
+}
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(to right, #007bff, #0056b3);
+      color: white;
+      padding: 2rem;
+      border-radius: 12px 12px 0 0;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .header img {
+      max-width: 90px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+    .header h1 {
+      font-size: 2rem;
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .header h6 {
+      font-size: 1rem;
+      margin: -0.2rem 0;
+      margin-top: 1px;
+    }
+    .header h3 {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-top: 0.8rem;
+      line-height: 1.5;
+    }
+    .header a {
+      color: #fff;
+      text-decoration: underline;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    .full-width {
+      grid-column: 1 / -1;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    input, select, textarea {
+      padding: 0.6rem 0.8rem;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: 0.3s;
+      background-color: #f9f9f9;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      background-color: #fff;
+      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+    .form-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s;
+    }
+    button[type="submit"] {
+      background-color: #2563eb;
+      color: #fff;
+    }
+    button[type="submit"]:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    .reset-btn {
+      background-color: #e5e7eb;
+      color: #111827;
+    }
+    .reset-btn:hover {
+      background-color: #d1d5db;
+    }
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .btn-container {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      .header h1 {
+        font-size: 24px;
+      }
+      .header h3 {
+        font-size: 16px;
+      }
+      .form-container {
+        padding: 1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 20px;
+      }
+      .header h3 {
+        font-size: 17px;
+      }
+      .form-container {
+        padding: 0.75rem;
+      }
+      input, select, textarea {
+        font-size: 0.9rem;
+      }
+      button {
+        font-size: 0.95rem;
+        padding: 0.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="header">
+      <h1>मानव एकता समाज सुधार केन्द्र</h1>
+      <h6>Human Unity Social Reform Center</h6>
+      <h3>तारकेश्वर न.पा.-५ काठमाडौँ <br>
+        स्थापनाः २०८० बि.स<br>
+        <a href="mailto:manavektakendra@gmail.com" style="font-size: 12px; color: #ffffff; text-decoration: none;">
+            manavektakendra@gmail.com</a><br>
+        +977-9765973355, +91-9819465847
+      </h3>
+    </div>
+
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DQy00000NKFDm" method="POST">
+      <input type="hidden" name="oid" value="00DQy00000NKFDm">
+      <input type="hidden" name="retURL" value="http://google.com">
+
+      <div class="form-grid">
+        <div class="form-group"><label>नाम</label><input name="first_name" type="text" placeholder="तपाईंको नाम लेख्नुहोस्" required /></div>
+        <div class="form-group"><label>थर</label><input name="last_name" type="text" placeholder="तपाईंको थर लेख्नुहोस्" required /></div>
+        <div class="form-group"><label>लिङ्ग</label>
+        <select name="GenderIdentity" required>
+            <option value="">--None--</option>
+            <option value="Male">पुरुष</option>
+            <option value="Female">महिला</option>
+            <option value="Nonbinary">तेस्रो लिङ्गी</option>            
+          </select>
+        </div>
+        <div class="form-group"><label>जन्म मिति</label><input name="Date_of_Birth__c" type="date" placeholder="तपाईंको जन्म मिति लेख्नुहोस्" required/></div>
+        <div class="form-group"><label>इमेल</label><input name="email" type="email" placeholder="तपाईंको इमेल लेख्नुहोस्" required /></div>
+        <div class="form-group"><label>फोन</label><input name="phone" type="tel" placeholder="तपाईंको फोन नम्बर लेख्नुहोस्" /></div>
+        <div class="form-group"><label>मोबाइल</label><input name="mobile" type="tel" placeholder="तपाईंको मोबाइल नम्बर लेख्नुहोस्" /></div>        
+        <div class="form-group"><label>नागरिकता नम्बर</label><input name="Citizenship_Number__c" type="text" placeholder="तपाईंको नागरिकता नम्बर लेख्नुहोस्" /></div>
+        <div class="form-group"><label>बुबाको नाम</label><input name="Fathers_Name__c" type="text" placeholder="तपाईंको बुबाको नाम लेख्नुहोस्" required/></div>
+        <div class="form-group"><label>आमाको नाम</label><input name="Mothers_Name__c" type="text" placeholder="तपाईंको आमाको नाम लेख्नुहोस्" required/></div>
+        <div class="form-group"><label>परिवार सदस्य संख्या</label><input name="Family_Member__c" type="number" placeholder="तपाईंको परिवार सदस्य संख्या लेख्नुहोस्" required/></div>
+         <div class="form-group">
+          <label>वैवाहिक स्थिति</label>
+          <select name="Marital_Status__c" id="maritalStatus" required onchange="toggleSpouseField()">
+            <option value="">--None--</option>
+            <option value="Married">विवाहित</option>
+            <option value="Unmarried">अविवाहित</option>
+          </select>
+        </div>
+
+        <div class="form-group" id="spouseField" style="display: none">
+          <label>पति/पत्नी नाम</label>
+          <input name="Husband_Wife_Name__c" type="text" placeholder="तपाईंको पति/पत्नी नाम लेख्नुहोस्" />
+        </div>
+        <div class="form-group"><label>गाउँ / वार्ड नं</label><textarea name="street" placeholder="तपाईंको गाउँ वा वडाको नाम" required></textarea></div>
+        <div class="form-group"><label>नगरपालिका / गाउँ पालिका</label><input name="city" type="text" placeholder="तपाईंको नगरपालिका / गाउँ पालिकाको नाम" required/></div>
+        <div class="form-group"><label>जिल्ला</label><input name="District__c" type="text" placeholder="तपाईंको जिल्ला" required/></div>
+        <div class="form-group"><label>प्रदेश</label><input name="state" type="text" placeholder="तपाईंको प्रदेश" required/></div>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit">Submit</button>
+        <button type="reset" class="reset-btn">Reset</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function toggleSpouseField() {
+      var maritalStatus = document.getElementById("maritalStatus").value;
+      var spouseField = document.getElementById("spouseField");
+      var spouseInput = spouseField.querySelector("input");
+
+      if (maritalStatus === "Married") {
+        spouseField.style.display = "block";
+        spouseInput.setAttribute("required", "required");
+      } else {
+        spouseField.style.display = "none";
+        spouseInput.removeAttribute("required");
+        spouseInput.value = ""; // Clear field if hidden
+      }
+    }
+  </script>
+</body>
+</html>

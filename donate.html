@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Donate - HUSRC</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      background: #4CAF50;
+      color: white;
+      padding: 30px 20px;
+    }
+    header h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+    .donation-section {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+    .donation-card {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      max-width: 500px;
+      width: 100%;
+    }
+    .donation-card h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #4CAF50;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .amount-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+    .amount-buttons button {
+      flex: 1;
+      padding: 8px 5px;
+      border: 1px solid #4CAF50;
+      border-radius: 5px;
+      background: white;
+      cursor: pointer;
+    }
+    .amount-buttons button.active,
+    .amount-buttons button:hover {
+      background: #4CAF50;
+      color: white;
+    }
+    .donate-btn {
+      display: inline-block;
+      background: #4CAF50;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      width: 100%;
+      margin-top: 10px;
+    }
+    .donate-btn:hover {
+      background: #45a049;
+    }
+    .payment-methods {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .payment-methods img {
+      max-width: 120px;
+      margin: 10px;
+      cursor: pointer;
+    }
+    .bank-details {
+      display: none;
+      margin-top: 20px;
+      background: #f7f7f7;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .bank-details h3 {
+      text-align: center;
+      color: #4CAF50;
+      margin-bottom: 10px;
+    }
+    .bank-details table {
+      width: 100%;
+      font-size: 0.95rem;
+    }
+    .bank-details th {
+      text-align: left;
+      padding: 5px 0;
+      width: 40%;
+    }
+    .qr-wrapper {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .qr-wrapper img {
+      max-width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .qr-wrapper a {
+      display: block;
+      margin-top: 5px;
+      color: #4CAF50;
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: white;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Support Our Mission</h1>
+    <p>Your donation helps us bring education and development to rural communities.</p>
+  </header>
+
+  <main class="donation-section">
+    <div class="donation-card">
+      <h2>Make a Donation</h2>
+      <form id="donationForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="amount">Donation Amount (NPR)</label>
+          <input type="number" id="amount" name="amount" placeholder="500" required>
+          <div class="amount-buttons">
+            <button type="button" data-amt="500">₨500</button>
+            <button type="button" data-amt="1000">₨1000</button>
+            <button type="button" data-amt="2500">₨2500</button>
+            <button type="button" data-amt="5000">₨5000</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="payment">Payment Method</label>
+          <select id="payment" name="payment" required>
+            <option value="">Select Payment Method</option>
+            <option value="paypal">PayPal</option>
+            <option value="esewa">eSewa</option>
+            <option value="khalti">Khalti</option>
+            <option value="bank">Bank Transfer</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">Message (Optional)</label>
+          <textarea id="message" name="message"></textarea>
+        </div>
+        <button type="submit" class="donate-btn">Donate Now</button>
+      </form>
+
+      <!-- PayPal Button -->
+      <div class="payment-methods" id="paypalBtn" style="display:none;">
+        <form action="https://www.paypal.com/donate" method="post" target="_blank">
+          <input type="hidden" name="business" value="YOUR_PAYPAL_EMAIL@example.com">
+          <input type="hidden" name="no_recurring" value="0">
+          <input type="hidden" name="currency_code" value="USD">
+          <button type="submit" class="donate-btn">Donate with PayPal</button>
+        </form>
+      </div>
+
+      <!-- eSewa and Khalti Buttons -->
+      <div class="payment-methods" id="esewaBtn" style="display:none;">
+        <p>Pay using eSewa:</p>
+        <a href="https://esewa.com.np/#/home" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/en/thumb/b/b2/ESewa_Logo.png/320px-ESewa_Logo.png" alt="Pay with eSewa">
+        </a>
+      </div>
+      <div class="payment-methods" id="khaltiBtn" style="display:none;">
+        <p>Pay using Khalti:</p>
+        <a href="https://khalti.com/" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Khalti_Digital_Wallet_Logo.png/320px-Khalti_Digital_Wallet_Logo.png" alt="Pay with Khalti">
+        </a>
+      </div>
+
+      <!-- Bank Transfer Details -->
+      <div class="bank-details" id="bankDetails">
+        <h3>Bank Transfer Details</h3>
+        <table>
+          <tr><th>बैंकको नाम:</th><td>राष्ट्रिय वाणिज्य बैंक लिमिटेड</td></tr>
+          <tr><th>खाता नाम:</th><td>मानव एकता समाज सुधार केन्द्र</td></tr>
+          <tr><th>खाता नम्बर:</th><td>1130100004616001</td></tr>
+          <tr><th>IFSC / SWIFT कोड:</th><td>########</td></tr>
+          <tr><th>रकम:</th><td>५०० नेपाली रुपैयाँ (NPR)</td></tr>
+          <tr><th>शाखा:</th><td>काठमाडौं, नेपाल</td></tr>
+        </table>
+        <div class="qr-wrapper">
+          <img src="https://manavekata-dev-ed--c.trailblaze.vf.force.com/resource/1748229663000/Qr_Code" alt="QR Code">
+          <a href="https://manavekata-dev-ed--c.trailblaze.vf.force.com/resource/1748229663000/Qr_Code" download="HUSRC_QR.png">Download QR</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>© 2025 Human Unity Social Reform Center. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const form = document.getElementById('donationForm');
+    const amountInput = document.getElementById('amount');
+    const amountButtons = document.querySelectorAll('.amount-buttons button');
+    const paymentSelect = document.getElementById('payment');
+    const bankDetails = document.getElementById('bankDetails');
+    const paypalBtn = document.getElementById('paypalBtn');
+    const esewaBtn = document.getElementById('esewaBtn');
+    const khaltiBtn = document.getElementById('khaltiBtn');
+
+    amountButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        amountButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        amountInput.value = button.getAttribute('data-amt');
+      });
+    });
+
+    paymentSelect.addEventListener('change', () => {
+      bankDetails.style.display = paymentSelect.value === 'bank' ? 'block' : 'none';
+      paypalBtn.style.display = paymentSelect.value === 'paypal' ? 'block' : 'none';
+      esewaBtn.style.display = paymentSelect.value === 'esewa' ? 'block' : 'none';
+      khaltiBtn.style.display = paymentSelect.value === 'khalti' ? 'block' : 'none';
+    });
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (form.checkValidity()) {
+        window.location.href = "success.html";
+      } else {
+        alert('Please fill in all required fields.');
+      }
+    });
+  </script>
+</body>
+</html>
