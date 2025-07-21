@@ -129,30 +129,11 @@
       font-size: 1.2rem;
     }
 
-   .nav-container {
-  position: fixed;
-  top: 0;
-  right: -100%;
-  width: 80%;
-  height: 100vh;
-  background: #fff;
-  transition: right 0.3s ease-in-out;
-  z-index: 999;
-}
-
-.nav-container.show {
-  right: 0;
-}
-
-.mobile-menu-close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-}
-
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
 
     .nav-links {
       display: flex;
