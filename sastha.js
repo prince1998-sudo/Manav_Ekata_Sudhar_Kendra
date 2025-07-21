@@ -1,26 +1,32 @@
-// Mobile Menu Toggle
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenuClose = document.getElementById('mobileMenuClose');
 const mobileMenu = document.getElementById('mobileMenu');
 
-mobileMenuBtn.addEventListener('click', () => {
-  mobileMenu.classList.add('show');
-  document.body.style.overflow = 'hidden';
-});
+// Open menu
+if (mobileMenuBtn && mobileMenu) {
+  mobileMenuBtn.addEventListener('click', () => {
+    mobileMenu.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  });
+}
 
-mobileMenuClose.addEventListener('click', () => {
-  mobileMenu.classList.remove('show');
-  document.body.style.overflow = '';
-});
+// Close menu
+if (mobileMenuClose && mobileMenu) {
+  mobileMenuClose.addEventListener('click', () => {
+    mobileMenu.classList.remove('show');
+    document.body.style.overflow = '';
+  });
+}
 
-// Close menu when clicking on links (added improvement)
-const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+// Close when clicking a nav link
+const mobileNavLinks = document.querySelectorAll('.nav-link');
 mobileNavLinks.forEach(link => {
   link.addEventListener('click', () => {
     mobileMenu.classList.remove('show');
     document.body.style.overflow = '';
   });
 });
+
 
 // Install Prompt
 let deferredPrompt;
