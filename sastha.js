@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  
+
   // Toggle Menu Function
   function toggleMenu() {
     mobileMenu.classList.toggle('show');
