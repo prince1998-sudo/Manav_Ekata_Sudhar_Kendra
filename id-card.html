@@ -41,8 +41,10 @@
       <p><strong>Issue Date:</strong> <span id="issueDate">-</span></p>
       <p><strong>Expiry Date:</strong> <span id="expiryDate">-</span></p>
     </div>
+    <button id="goback">Dashboard</button>
+    <button id="downloadBtn">Download Card</button><div id="buttonContainer">
+</div>
 
-    <button id="downloadBtn">Download ID Card</button>
   </div>
 
   <!-- jsPDF and html2canvas -->
@@ -131,6 +133,10 @@
       // Show the download button again
       downloadBtn.style.display = "inline-block";
     });
+    document.getElementById('goback').addEventListener('click', function () {
+  window.location.href = 'dashboard.html';
+});
+
   </script>
 </body>
 </html>
