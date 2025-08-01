@@ -1,65 +1,311 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reset Password</title>
-  <link rel="stylesheet" href="login.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #eef2f7, #cfd9df);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .form-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #2c3e50;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .form-description {
+      text-align: center;
+      color: #555;
+      margin-bottom: 24px;
+      font-size: 15px;
+    }
+
+    .input-container {
+      margin-bottom: 20px;
+    }
+
+    .input-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .email-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      box-sizing: border-box;
+      height: 48px;
+      transition: border-color 0.3s;
+    }
+
+    .email-input:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    .error {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      height: 48px;
+    }
+
+    .submit-btn:hover {
+      background-color: #0056b3;
+    }
+
+    .success-message {
+      color: #2ecc71;
+      text-align: center;
+      margin-top: 20px;
+      display: none;
+      font-size: 14px;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .login-link a {
+      color: #007BFF;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="form-container">
     <h2>Reset Your Password</h2>
-    <form id="resetForm">
-      <input type="text" id="code" placeholder="Enter Reset Code" required />
-      <div style="position: relative;">
-        <input type="password" id="loginPassword" placeholder="Password" required />
-        <svg class="eye-icon" id="eyeIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7.5a3 3 0 100 6 3 3 0 000-6z"/>
-        </svg>
+    <p class="form-description">Enter your email address to receive a password reset code</p>
+    
+    <div id="requestForm">
+      <div class="input-container">
+        <label class="input-label">Your registered email</label>
+        <input type="email" id="resetEmail" class="email-input" placeholder="Enter your email address" required />
+        <div class="error" id="emailError"></div>
       </div>
-      <button type="submit">Reset Password</button>
-    </form>
+      
+      <button id="sendCodeBtn" class="submit-btn">Send Reset Code</button>
+      <div class="success-message" id="emailSentMessage">Reset code has been sent to your email!</div>
+    </div>
+
+    <div id="resetForm" style="display: none;">
+      <div class="input-container">
+        <label class="input-label">Reset code</label>
+        <input type="text" id="resetCode" class="email-input" placeholder="Enter 6-digit code" required maxlength="6" />
+        <div class="error" id="codeError"></div>
+      </div>
+      
+      <div class="input-container">
+        <label class="input-label">New password</label>
+        <input type="password" id="newPassword" class="email-input" placeholder="Enter new password" required minlength="6" />
+        <div class="error" id="passwordError"></div>
+      </div>
+      
+      <button id="resetPasswordBtn" class="submit-btn">Reset Password</button>
+      <div class="success-message" id="successMessage">Password updated successfully!</div>
+    </div>
+
+    <p class="login-link">
+      Remember your password? <a href="login.html">Login here</a>
+    </p>
   </div>
 
   <script>
-    document.getElementById("resetForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const enteredCode = document.getElementById("code").value;
-      const newPassword = document.getElementById("newPassword").value;
-      const storedCode = localStorage.getItem("resetCode");
-      const email = localStorage.getItem("resetEmail");
+    // Initialize EmailJS with your public key
+    emailjs.init("6q3g1tcGw7NY19oLt");
 
-      if (enteredCode !== storedCode) {
-        alert("Invalid reset code.");
+    const requestForm = document.getElementById("requestForm");
+    const resetForm = document.getElementById("resetForm");
+    const sendCodeBtn = document.getElementById("sendCodeBtn");
+    const resetPasswordBtn = document.getElementById("resetPasswordBtn");
+    const resetEmailInput = document.getElementById("resetEmail");
+    const resetCodeInput = document.getElementById("resetCode");
+    const newPasswordInput = document.getElementById("newPassword");
+    const emailSentMessage = document.getElementById("emailSentMessage");
+    const successMessage = document.getElementById("successMessage");
+
+    // Focus on email input when page loads
+    resetEmailInput.focus();
+
+    // Send reset code
+    sendCodeBtn.addEventListener('click', async () => {
+      const email = resetEmailInput.value.trim();
+      
+      if (!email) {
+        showError('emailError', 'Please enter your email address');
+        resetEmailInput.focus();
         return;
       }
 
+      // Simple email validation
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        showError('emailError', 'Please enter a valid email address');
+        resetEmailInput.focus();
+        return;
+      }
+
+      // Check if email exists in members
+      const members = JSON.parse(localStorage.getItem("members")) || [];
+      const user = members.find(m => m.email === email);
+      
+      if (!user) {
+        showError('emailError', 'No account found with this email');
+        resetEmailInput.focus();
+        return;
+      }
+
+      // Generate a 6-digit reset code
+      const resetCode = Math.floor(100000 + Math.random() * 900000).toString();
+      localStorage.setItem("resetCode", resetCode);
+      localStorage.setItem("resetEmail", email);
+
+      try {
+        // Send email using EmailJS
+        await emailjs.send("service_b9highj", "template_0m8ymaf", {
+          to_email: email,
+          to_name: user.firstName,
+          reset_code: resetCode
+        });
+
+        // Show success message and switch to reset form
+        emailSentMessage.style.display = 'block';
+        setTimeout(() => {
+          requestForm.style.display = 'none';
+          resetForm.style.display = 'block';
+          resetCodeInput.focus();
+        }, 1500);
+      } catch (error) {
+        console.error("Failed to send email:", error);
+        showError('emailError', 'Failed to send reset code. Please try again.');
+        resetEmailInput.focus();
+      }
+    });
+
+    // Reset password
+    resetPasswordBtn.addEventListener('click', () => {
+      const code = resetCodeInput.value.trim();
+      const newPassword = newPasswordInput.value.trim();
+      const storedCode = localStorage.getItem("resetCode");
+      const email = localStorage.getItem("resetEmail");
+
+      // Validate inputs
+      if (!code) {
+        showError('codeError', 'Please enter the reset code');
+        resetCodeInput.focus();
+        return;
+      }
+
+      if (!newPassword) {
+        showError('passwordError', 'Please enter a new password');
+        newPasswordInput.focus();
+        return;
+      }
+
+      if (code !== storedCode) {
+        showError('codeError', 'Invalid reset code');
+        resetCodeInput.focus();
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        showError('passwordError', 'Password must be at least 6 characters');
+        newPasswordInput.focus();
+        return;
+      }
+
+      // Update password in members
       const members = JSON.parse(localStorage.getItem("members")) || [];
       const userIndex = members.findIndex(m => m.email === email);
+      
       if (userIndex !== -1) {
         members[userIndex].password = newPassword;
         localStorage.setItem("members", JSON.stringify(members));
-        alert("Password updated successfully!");
+        
+        // Clear reset data
         localStorage.removeItem("resetCode");
         localStorage.removeItem("resetEmail");
-        window.location.href = "login.html";
+        
+        // Show success message
+        successMessage.style.display = 'block';
+        resetPasswordBtn.disabled = true;
+        
+        // Redirect to login after 2 seconds
+        setTimeout(() => {
+          window.location.href = "login.html";
+        }, 2000);
       } else {
-        alert("User not found.");
+        showError('codeError', 'User not found');
       }
     });
-  </script>
 
-   <script>
-    const passwordInput = document.getElementById('loginPassword');
-    const eyeIcon = document.getElementById('eyeIcon');
-
-    eyeIcon.addEventListener('mouseover', () => {
-      passwordInput.type = 'text';
-    });
-
-    eyeIcon.addEventListener('mouseout', () => {
-      passwordInput.type = 'password';
-    });
+    function showError(elementId, message) {
+      // Hide all errors first
+      document.querySelectorAll('.error').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      const errorElement = document.getElementById(elementId);
+      if (errorElement) {
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+      }
+    }
   </script>
 </body>
 </html>
