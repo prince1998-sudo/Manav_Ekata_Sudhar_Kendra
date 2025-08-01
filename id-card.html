@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ID Card</title>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@600&family=Noto+Sans+Devanagari:wght@700&display=swap" rel="stylesheet">
+  <link href="id-card.css" rel="stylesheet">
+
+</head>
+<body>
+
+  <div class="id-card" id="idCard">
+    <div class="header">
+      <img src="logo_of_sastha_nepal-removebg-preview.png" alt="Organization Logo" class="logo">
+      <h2>मानव एकता समाज सुधार केन्द्र</h2>
+      <h6>Human Unity Social Reform Center</h6>
+      <h3>
+        तारकेश्वर न.पा.-५ काठमाडौँ<br>
+        स्थापनाः २०८० बि.स<br>
+        <a href="mailto:manavektakendra@gmail.com" style="color: #ffffff; text-decoration: none;">
+          manavektakendra@gmail.com
+        </a><br>
+        +977-9765973355, +91-9819465847
+      </h3>
+    </div>
+
+    <div class="photo-section">
+      <label for="photoInput">
+        <img src="images/default-profile.png" alt="Profile Photo" class="photo" id="idPhoto" title="Click to change photo">
+      </label>
+      <input type="file" id="photoInput" accept="image/*" style="display: none;" />
+    </div>
+
+    <div class="info-section">
+      <p><strong>Name:</strong> <span id="fullName">-</span></p>
+      <p><strong>Email:</strong> <span id="email">-</span></p>
+      <p><strong>Phone:</strong> <span id="phone">-</span></p>
+      <p><strong>Date of Birth:</strong> <span id="dob">-</span></p>
+      <p><strong>ID No:</strong> <span id="idNumber">-</span></p>
+      <p><strong>Issue Date:</strong> <span id="issueDate">-</span></p>
+      <p><strong>Expiry Date:</strong> <span id="expiryDate">-</span></p>
+    </div>
+
+    <button id="downloadBtn">Download ID Card</button>
+  </div>
+
+  <!-- jsPDF and html2canvas -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    function formatDate(date) {
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}-${month}-${year}`;
+    }
+
+    function populateIDCard() {
+      const firstName = localStorage.getItem("firstName") || "";
+      const lastName = localStorage.getItem("lastName") || "";
+      const email = localStorage.getItem("email") || "-";
+      const phone = localStorage.getItem("phone") || "-";
+      const dob = localStorage.getItem("dob") || "-";
+      const photo = localStorage.getItem("profilePic");
+
+      const fullName = (firstName + " " + lastName).trim() || "-";
+      const idNumber = new Date().getTime().toString().slice(-6);
+      const today = new Date();
+      const expiry = new Date(today);
+      expiry.setFullYear(today.getFullYear() + 2);
+
+      document.getElementById("fullName").textContent = fullName;
+      document.getElementById("email").textContent = email;
+      document.getElementById("phone").textContent = phone;
+      document.getElementById("dob").textContent = dob;
+      document.getElementById("idNumber").textContent = idNumber;
+      document.getElementById("issueDate").textContent = formatDate(today);
+      document.getElementById("expiryDate").textContent = formatDate(expiry);
+
+      if (photo && photo.startsWith("data:image")) {
+        document.getElementById("idPhoto").src = photo;
+      }
+    }
+
+    document.getElementById("photoInput").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const imageUrl = e.target.result;
+        document.getElementById("idPhoto").src = imageUrl;
+        localStorage.setItem("profilePic", imageUrl);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("downloadBtn").addEventListener("click", async () => {
+      const { jsPDF } = window.jspdf;
+      const idCard = document.getElementById("idCard");
+      const canvas = await html2canvas(idCard);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "PNG", 10, 10, 90, 135);
+      pdf.save("ID_Card.pdf");
+    });
+
+    window.onload = populateIDCard;
+  </script>
+  <script>
+    document.getElementById("downloadBtn").addEventListener("click", async () => {
+      const { jsPDF } = window.jspdf;
+      const idCard = document.getElementById("idCard");
+      const downloadBtn = document.getElementById("downloadBtn");
+
+      // Hide the download button
+      downloadBtn.style.display = "none";
+
+      // Wait a moment to apply the display change
+      await new Promise(resolve => setTimeout(resolve, 100));
+
+      // Capture and generate PDF
+      const canvas = await html2canvas(idCard);
+      const imgData = canvas.toDataURL("image/png");
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "PNG", 10, 10, 90, 135);
+      pdf.save("ID_Card.pdf");
+
+      // Show the download button again
+      downloadBtn.style.display = "inline-block";
+    });
+  </script>
+</body>
+</html>

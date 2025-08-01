@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - HUSRC Member</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+  body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #eef2f7, #cfd9df);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 100px 20px 20px 20px; /* Extra top padding for header space */
+      box-sizing: border-box;
+      }
+
+    .form-container {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    form label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    form input,
+    form select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .terms-container {
+      font-size: 14px;
+      margin: 15px 0;
+    }
+
+    .terms-container label {
+      display:block;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .terms-container a {
+      color: #2c7be5;
+      text-decoration: none;
+    }
+
+    .center-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+    }
+
+    #registerBtn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      opacity: 0.6;
+      cursor: not-allowed;
+      transition: 0.3s ease;
+      width: 100%;
+    }
+
+    #registerBtn:enabled {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    #registerBtn:enabled:hover {
+      background-color: #0056b3;
+    }
+
+    p {
+      text-align: center;
+      font-size: 14px;
+      margin-top: 15px;
+    }
+
+    p a {
+      color: #2c7be5;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .eye-icon {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
+      fill: #888;
+    }
+
+    .eye-icon:hover {
+      fill: #007BFF;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Member Registration</h2>
+
+    <form id="registerForm">
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" required placeholder="First Name" />
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" required placeholder="Last Name" />
+
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" required />
+
+      <label for="gender">Gender</label>
+      <select id="gender" required>
+        <option value="">Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="regPhone">Phone No.</label>
+      <input type="tel" id="regPhone" required placeholder="Phone Number" />
+
+      <label for="regEmail">Email</label>
+      <input type="email" id="regEmail" required placeholder="Email" />
+
+      <label for="loginPassword">Create New Password</label>
+      <div class="password-wrapper">
+        <input type="password" id="loginPassword" required placeholder="Create New Password" />
+        <svg class="eye-icon" id="eyeIcon" viewBox="0 0 24 24">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7.5a3 3 0 100 6 3 3 0 000-6z"/>
+        </svg>
+      </div>
+      </form>
+
+      <div class="terms-container">
+        <label class="terms-label">
+          <input type="checkbox" id="agreeTerms" />
+          <span>By signing up you agree to our <a href="#">Terms</a> and <a href="#">Privacy policy</a>.</span>
+        </label>
+      </div>
+      <div class="center-container">
+        <button type="submit" id="registerBtn" disabled>Register</button>
+      </div>
+    
+
+    <p>Already a member? <a href="login.html">Login here</a></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const inputs = form.querySelectorAll('input[required], select[required]');
+    const registerBtn = document.getElementById('registerBtn');
+    const checkbox = document.getElementById('agreeTerms');
+
+    function validateForm() {
+      const allFilled = [...inputs].every(input => input.value.trim() !== '');
+      registerBtn.disabled = !(allFilled && checkbox.checked);
+    }
+
+    inputs.forEach(input => input.addEventListener('input', validateForm));
+    checkbox.addEventListener('change', validateForm);
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Save to localStorage (just demo)
+      localStorage.setItem("firstName", document.getElementById("firstName").value.trim());
+      localStorage.setItem("lastName", document.getElementById("lastName").value.trim());
+      localStorage.setItem("dob", document.getElementById("dob").value);
+      localStorage.setItem("gender", document.getElementById("gender").value);
+      localStorage.setItem("phone", document.getElementById("regPhone").value);
+      localStorage.setItem("email", document.getElementById("regEmail").value.trim());
+      localStorage.setItem("password", document.getElementById("loginPassword").value); // not secure
+
+      // Redirect to dashboard
+      window.location.href = 'dashboard.html';
+    });
+
+    // Password show/hide
+    const passwordInput = document.getElementById('loginPassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    let passwordVisible = false;
+    eyeIcon.addEventListener('click', () => {
+      passwordVisible = !passwordVisible;
+      passwordInput.type = passwordVisible ? 'text' : 'password';
+    });
+  </script>
+
+</body>
+</html>

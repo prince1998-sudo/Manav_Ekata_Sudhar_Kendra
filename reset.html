@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Reset Password</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="form-container">
+    <h2>Reset Your Password</h2>
+    <form id="resetForm">
+      <input type="text" id="code" placeholder="Enter Reset Code" required />
+      <div style="position: relative;">
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <svg class="eye-icon" id="eyeIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7.5a3 3 0 100 6 3 3 0 000-6z"/>
+        </svg>
+      </div>
+      <button type="submit">Reset Password</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("resetForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const enteredCode = document.getElementById("code").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const storedCode = localStorage.getItem("resetCode");
+      const email = localStorage.getItem("resetEmail");
+
+      if (enteredCode !== storedCode) {
+        alert("Invalid reset code.");
+        return;
+      }
+
+      const members = JSON.parse(localStorage.getItem("members")) || [];
+      const userIndex = members.findIndex(m => m.email === email);
+      if (userIndex !== -1) {
+        members[userIndex].password = newPassword;
+        localStorage.setItem("members", JSON.stringify(members));
+        alert("Password updated successfully!");
+        localStorage.removeItem("resetCode");
+        localStorage.removeItem("resetEmail");
+        window.location.href = "login.html";
+      } else {
+        alert("User not found.");
+      }
+    });
+  </script>
+
+   <script>
+    const passwordInput = document.getElementById('loginPassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    eyeIcon.addEventListener('mouseover', () => {
+      passwordInput.type = 'text';
+    });
+
+    eyeIcon.addEventListener('mouseout', () => {
+      passwordInput.type = 'password';
+    });
+  </script>
+</body>
+</html>

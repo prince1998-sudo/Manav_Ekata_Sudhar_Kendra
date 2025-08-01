@@ -1,0 +1,344 @@
+/* Reset and Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f0f4f8;
+  padding: 20px;
+}
+
+/* Container */
+.container {
+  max-width: 1100px;
+  margin: auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+/* Unified Button Style */
+.action-btn {
+  padding: 8px 18px;
+  background-color: #2b6cb0;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+.action-btn:hover {
+  background-color: #2c5282;
+}
+
+/* Main Layout */
+.main-section {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.left-section,
+.right-section {
+  flex: 1;
+  min-width: 300px;
+}
+
+/* Profile Section */
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profile-img-container {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 15px;
+}
+
+.profile-img-container img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 3px solid #3182ce;
+}
+
+.profile-options {
+  display: none;
+  position: absolute;
+  bottom: -70px;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  width: 140px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.profile-options button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  text-align: left;
+}
+
+.profile-options button:hover {
+  background-color: #f0f0f0;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+/* User Info */
+.user-info p {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.user-info span {
+  font-weight: 500;
+  color: #333;
+  border-bottom: 1px dashed #ccc;
+  padding: 2px 5px;
+}
+
+.user-info span[contenteditable="true"]:focus {
+  background-color: #edf2f7;
+  outline: none;
+  border-radius: 4px;
+}
+
+/* Forms */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  font-size: 14px;
+}
+
+.editable {
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  cursor: text;
+  transition: background-color 0.2s ease;
+}
+
+.editable:focus {
+  outline: none;
+  background-color: #edf2f7;
+  border: 1px dashed #90cdf4;
+}
+
+/* Progress Circle */
+.profile-progress {
+  width: 80px;
+  margin-top: 10px;
+}
+
+.circular-chart {
+  display: block;
+  margin: auto;
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  stroke: #00aaff;
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.percentage {
+  fill: #333;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+
+/* Save Bio Button */
+#saveBioBtn {
+  display: none;
+  padding: 10px 20px;
+  background-color: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#saveBioBtn:hover {
+  background-color: #2b6cb0;
+}
+
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .container {
+    padding: 20px;
+  }
+
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .logo-text {
+    font-size: 18px;
+  }
+
+  .action-btn {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .main-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .left-section,
+  .right-section {
+    min-width: 100%;
+  }
+
+  .profile-img-container {
+    width: 100px;
+    height: 100px;
+  }
+
+  .user-info p {
+    font-size: 14px;
+  }
+  
+
+  textarea {
+    font-size: 13px;
+  }
+
+  #saveBioBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+
+  .profile-img-container {
+    width: 80px;
+    height: 80px;
+  }
+
+  .profile-progress {
+    width: 60px;
+  }
+
+  .circular-chart {
+    max-width: 60px;
+    max-height: 60px;
+  }
+
+  .percentage {
+    font-size: 0.45em;
+  }
+
+  .button-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: wrap; /* allows wrapping if needed */
+}
+
+.button-group .action-btn {
+  flex: 1; /* makes both buttons take equal space */
+  margin: 0; /* remove vertical spacing */
+}
+
+
+  textarea {
+    padding: 8px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,110 @@
+/* Base Styles */
+body {
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  margin: 0;
+}
+
+.form-container,
+.dashboard {
+  background: white;
+  padding: 30px 40px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px;
+  width: 100%;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+button:hover {
+  background: #45a049;
+}
+
+a {
+  color: #4CAF50;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.form-container {
+      max-width: 350px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-family: sans-serif;
+      position: relative;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 40px 10px 10px;
+      margin: 10px 0;
+      box-sizing: border-box;
+    }
+
+    .eye-icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      top: 18px;
+      right: 30px;
+      cursor: pointer;
+      fill: #888;
+    }
+
+    .eye-icon:hover {
+      fill: #00ddff;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .form-container,
+  .dashboard {
+    padding: 20px;
+  }
+
+  input,
+  button {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  a {
+    font-size: 0.85rem;
+  }
+}

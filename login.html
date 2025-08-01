@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Member Login - HUSRC</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+  <div class="form-container">
+    <h2>Member Login</h2>
+    <form id="loginForm">
+      <input type="text" id="loginUsername" placeholder="Username" required />
+      
+      <div style="position: relative;">
+        <input type="password" id="loginPassword" placeholder="Password" required />
+        <svg class="eye-icon" id="eyeIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7.5a3 3 0 100 6 3 3 0 000-6z"/>
+        </svg>
+      </div>
+      <form action="dashboard.html" method="GET">
+      <button type="submit">Login</button>
+      </form>
+
+      <p style="text-align: center; margin-top: 10px;">
+        <a href="reset.html" id="forgotPassword">Forgot Password?</a>
+      </p>
+
+      <p>Not a member? <a href="register.html">Register here</a></p>
+    </form>
+  </div>
+
+  <script>
+    const passwordInput = document.getElementById('loginPassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    eyeIcon.addEventListener('mouseover', () => {
+      passwordInput.type = 'text';
+    });
+
+    eyeIcon.addEventListener('mouseout', () => {
+      passwordInput.type = 'password';
+    });
+  </script>
+  <script>
+  document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // prevent actual submission
+    // Optionally add validation here
+    window.location.href = "dashboard.html";
+  });
+</script>
+</body>
+</html>
