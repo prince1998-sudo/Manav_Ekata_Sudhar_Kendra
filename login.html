@@ -2,52 +2,120 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Member Login - HUSRC</title>
   <link rel="stylesheet" href="login.css" />
+  <style>
+    .eye-icon {
+      width: 24px;
+      height: 24px;
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      fill: #666;
+    }
+  </style>
 </head>
 <body>
   <div class="form-container">
     <h2>Member Login</h2>
     <form id="loginForm">
-      <input type="text" id="loginUsername" placeholder="Username" required />
-      
+      <input type="text" id="loginUsername" placeholder="Username or Email" required />
+
       <div style="position: relative;">
         <input type="password" id="loginPassword" placeholder="Password" required />
         <svg class="eye-icon" id="eyeIcon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5C21.27 7.61 17 4.5 12 4.5zm0 12a4.5 4.5 0 110-9 4.5 4.5 0 010 9zm0-7.5a3 3 0 100 6 3 3 0 000-6z"/>
         </svg>
       </div>
-      <form action="dashboard.html" method="GET">
+
       <button type="submit">Login</button>
-      </form>
 
       <p style="text-align: center; margin-top: 10px;">
         <a href="reset.html" id="forgotPassword">Forgot Password?</a>
       </p>
-
       <p>Not a member? <a href="register.html">Register here</a></p>
     </form>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
   <script>
+    // Eye icon logic
     const passwordInput = document.getElementById('loginPassword');
     const eyeIcon = document.getElementById('eyeIcon');
+    eyeIcon.addEventListener('mouseover', () => passwordInput.type = 'text');
+    eyeIcon.addEventListener('mouseout', () => passwordInput.type = 'password');
 
-    eyeIcon.addEventListener('mouseover', () => {
-      passwordInput.type = 'text';
+    // Login logic
+    const loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const loginInput = document.getElementById("loginUsername").value.trim().toLowerCase();
+      const loginPassword = document.getElementById("loginPassword").value;
+
+      const members = JSON.parse(localStorage.getItem("members")) || [];
+
+      const user = members.find(
+        m =>
+          (m.email.toLowerCase() === loginInput || m.username === loginInput) &&
+          m.password === loginPassword
+      );
+
+      if (!user) {
+        alert("Invalid username or password.");
+      } else {
+        localStorage.setItem("loggedInUser", user.email);
+        window.location.href = "dashboard.html";
+      }
     });
 
-    eyeIcon.addEventListener('mouseout', () => {
-      passwordInput.type = 'password';
-    });
-  </script>
-  <script>
-  document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // prevent actual submission
-    // Optionally add validation here
-    window.location.href = "dashboard.html";
+    const forgotBtn = document.getElementById("forgotPassword");
+forgotBtn.addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const emailPrompt = prompt("Enter your registered email:");
+  if (!emailPrompt) return;
+
+  const membersRaw = localStorage.getItem("members");
+
+  if (!membersRaw) {
+    alert("No users registered yet. Please register first.");
+    return;
+  }
+
+  const members = JSON.parse(membersRaw);
+  const user = members.find(
+    m => m.email.toLowerCase() === emailPrompt.trim().toLowerCase()
+  );
+
+  if (!user) {
+    alert("No user found with that email.");
+    return;
+  }
+
+  const resetCode = Math.floor(100000 + Math.random() * 900000);
+  localStorage.setItem("resetCode", resetCode);
+  localStorage.setItem("resetEmail", emailPrompt);
+
+  emailjs.init("6q3g1tcGw7NY19oLt"); // your EmailJS public key
+
+  emailjs.send("service_b9highj", "template_yourtemplate", {
+    to_email: emailPrompt,
+    to_name: user.firstName,
+    reset_code: resetCode
+  }).then(function () {
+    alert("Reset code sent to your email.");
+    window.location.href = "reset.html";
+  }, function (error) {
+    console.error("FAILED...", error);
+    alert("Failed to send reset email. Try again.");
   });
-</script>
+});
+
+  </script>
 </body>
 </html>
